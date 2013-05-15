@@ -9,6 +9,16 @@ Note: KLHorizontalSelect is intended for use with portrait orientation on iPhone
 
 [Check out the Demo](http://www.youtube.com/watch?v=uzWZG99SAF0&feature=youtube_gdata_player) *Excuse the graphics glitches and lag due to my slow computer.*
 
+## Improvement ##
+
+Thanks to Kieran's awesome project at <a href="https://github.com/KieranLafferty/KLHorizontalSelect">KLHorizontalSelect</a>
+
+I made two minor improvements
+
+* Support for iOS 5
+
+* Support swiping left or right in the main view area to switch between cells
+
 ## Installation ##
 
 Drag the included <code>KLHorizontalSelect.h, KLHorizontalSelect.m</code> files into your project. Then, include the following frameworks under *Link Binary With Libraries*:
@@ -76,6 +86,8 @@ The visual appearance can be tweaked by changing the constants in <code>KLHorizo
 * [@kieran_lafferty](https://twitter.com/kieran_lafferty) on Twitter
 * [@kieranlafferty](https://github.com/kieranlafferty) on Github
 * <a href="mailTo:kieran.lafferty@gmail.com">kieran.lafferty [at] gmail [dot] com</a>
+* [@zwo](https://github.com/zwo) on Github
+* <a href="mailTo:z3241280@gmail.com">z3241280 At Gmail</a>
 
 ## License ##
 
