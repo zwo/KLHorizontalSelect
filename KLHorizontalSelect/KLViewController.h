@@ -11,4 +11,5 @@
 @interface KLViewController : UIViewController <KLHorizontalSelectDelegate>
 @property (nonatomic, strong) KLHorizontalSelect* horizontalSelect;
 - (IBAction)showHidePressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *aLabel;
 @end

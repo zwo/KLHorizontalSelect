@@ -12,6 +12,10 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface KLHorizontalSelect ()
+{
+    BOOL isSwiping; //doing swiping gesture
+    CGFloat swipeStartPoint; // Value of the starting touch point's x location
+}
 -(CGFloat) defaultMargin;
 @end
 @implementation KLHorizontalSelect
@@ -95,6 +99,47 @@
     CGGradientRelease(myGradient);
 
 }
+#pragma mark - gestures implemented by zwo
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if ([touches count]==1) {
+        UIViewController *vc=(UIViewController *)self.delegate;
+        swipeStartPoint=[[touches anyObject] locationInView:vc.view].x;
+        isSwiping=YES;
+    }
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    //nothing should do here
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if (!isSwiping) {
+        return;
+    }
+    UIViewController *vc=(UIViewController *)self.delegate;
+    CGFloat swipeDistance=[[touches anyObject] locationInView:vc.view].x-swipeStartPoint;
+    NSUInteger currentCellIndex=[_currentIndex row];
+    NSUInteger numbersOfCells=[self.tableData count];
+    
+    if (currentCellIndex<numbersOfCells-1 && swipeDistance<-50.0) {
+        [self setCurrentIndex:[NSIndexPath indexPathForRow:currentCellIndex+1 inSection:0]];
+    }
+    
+    if (currentCellIndex>0 && swipeDistance>50.0f) {
+        [self setCurrentIndex:[NSIndexPath indexPathForRow:currentCellIndex-1 inSection:0]];
+    }
+    
+    isSwiping=NO;
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    isSwiping=NO;
+}
+
 #pragma mark - UIScrollViewDelegate implementation
 
 -(void) scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
@@ -155,8 +200,11 @@
 }
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
         static NSString* reuseIdentifier = @"HorizontalCell";
-        [self.tableView registerClass:[KLHorizontalSelectCell class] forCellReuseIdentifier:reuseIdentifier];
         KLHorizontalSelectCell* cell = (KLHorizontalSelectCell*)[self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    
+    if (!cell) {
+        cell=[[KLHorizontalSelectCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    }
         
         NSDictionary* cellData = [self.tableData objectAtIndex: indexPath.row];
         [cell.image setImage:[UIImage imageNamed: [cellData objectForKey:@"image"]]];

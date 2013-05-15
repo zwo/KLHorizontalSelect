@@ -41,10 +41,35 @@
 
 #pragma - mark KLHorizontalSelectDelegate implementation
 -(void) horizontalSelect:(id)horizontalSelect didSelectCell:(KLHorizontalSelectCell*) cell {
-    NSLog(@"Selected Cell: %@", cell.label.text);
+    self.aLabel.text=[NSString stringWithFormat:@"Cell: %@",cell.label.text];
 }
 
 - (IBAction)showHidePressed:(id)sender {
     [self.horizontalSelect.arrow toggle:YES];
+}
+- (void)viewDidUnload {
+    [self setALabel:nil];
+    [super viewDidUnload];
+}
+
+#pragma mark - gestures implemented by zwo
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.horizontalSelect touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.horizontalSelect touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.horizontalSelect touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.horizontalSelect touchesCancelled:touches withEvent:event];
 }
 @end
